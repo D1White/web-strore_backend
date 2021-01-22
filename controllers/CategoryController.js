@@ -83,15 +83,6 @@ class CategoryController {
 
   async update(req, res) {
     try {
-      // const errors = validationResult(req);
-
-      // if (!errors.isEmpty()) {
-      //   res.status(400).json({
-      //     status: "error",
-      //     errors: errors.array(),
-      //   });
-      //   return;
-      // }
 
       const category = await CategoryModel.updateOne(
         { _id: req.params.id },

@@ -101,6 +101,7 @@ class ProductController {
         category: req.body.category,
         design: req.body.design,
         info: req.body.info,
+        description: req.body.description,
       }
 
       const product = await ProductModel.create(data);
@@ -173,6 +174,7 @@ class ProductController {
           category: req.body.category,
           design: req.body.design,
           info: req.body.info,
+          description: req.body.description,
         }}
       );
 

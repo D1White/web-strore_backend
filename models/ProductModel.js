@@ -24,7 +24,8 @@ const ProductSchema = new Schema({
   info: {
     type: Map,
     of: String
-  }
+  },
+  description: String,
 });
 
 const ProductModel = model('Product', ProductSchema);
