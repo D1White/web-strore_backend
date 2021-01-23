@@ -9,10 +9,37 @@ const { isValidObjectId } = require("../utils/isValidObjectId");
 class ProductController {
   async index(req, res) {
     try { 
-
+      const query = req.query;
       if (JSON.stringify(req.query) !== '{}') {
         console.log(req.query);
-        const products = await ProductModel.find(req.query).exec();
+        // const products = await ProductModel.find(req.query).exec();
+        let filterQuery = {};
+        let sortQuery = {};
+        for (const key in query) {
+          if (key[0] === '_') {
+            sortQuery[key.slice(1)] = query[key];
+          }else if (key[0] === '$') {
+            filterQuery[key.slice(1)] = Object.fromEntries(new URLSearchParams(query[key]))
+          }else {
+            filterQuery[key] = query[key];
+          }
+        }
+
+        console.log('filter' ,filterQuery);
+        console.log('sort' ,sortQuery);
+        // const qe = new URLSearchParams({
+        //   $lte: 1,
+        //   $gte: 5
+        // }).toString();
+        // console.log(qe);
+        // const st = qe.toString();
+        // console.log(
+        //   Object.fromEntries(new URLSearchParams('%24lte=2'))
+        // );
+
+
+        const products = await ProductModel.find(filterQuery, null, { sort: sortQuery }).exec();
+        // price: { $lte: 3 }.sort({price: 'asc'}
         res.json({
           status: "succes",
           data: products,
@@ -42,12 +69,25 @@ class ProductController {
         return;
       }
 
-      const product = await ProductModel.findById(productId).exec();
+      const product = await ProductModel.findById(productId).populate({
+        path: 'category',
+        select: '-products -__v'
+      }).exec();
+
+      // populate({
+      //   patch: 'category',
+      //   select: '-products'
+      // }).execPopulate()
 
       if (!product) {
         res.status(404).send();
         return;
       }
+
+      // await product.populate({
+      //   path: 'category',
+      //   select: '-products',
+      // }).execPopulate(),
 
       res.json({
         status: "succes",
