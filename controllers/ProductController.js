@@ -39,7 +39,7 @@ class ProductController {
 
 
         const products = await ProductModel.find(filterQuery, null, { sort: sortQuery }).exec();
-        // price: { $lte: 3 }.sort({price: 'asc'}
+        
         res.json({
           status: "succes",
           data: products,
@@ -153,7 +153,7 @@ class ProductController {
         } }
       )
 
-      res.json({
+      res.status(201).json({
         status: "succes",
         data: await product.populate({
           path: 'category',
@@ -253,10 +253,7 @@ class ProductController {
               res.send(err);
             } else {
               product.remove();
-              res.json({
-                status: "succes",
-                message: "Product deleted successfully",
-              });
+              res.status(204).send();
             }
           }
         );

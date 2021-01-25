@@ -68,7 +68,7 @@ class CategoryController {
 
       const category = await CategoryModel.create(data);
 
-      res.json({
+      res.status(201).json({
         status: "succes",
         data: category,
       })

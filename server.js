@@ -9,6 +9,7 @@ const cors = require("cors");
 const { ProductCtrl } = require('./controllers/ProductController');
 const { CategoryCtrl } = require('./controllers/CategoryController');
 const { DesignCtrl } = require('./controllers/DesignController');
+const { PurchaseCtrl } = require('./controllers/PurchaseController');
 
 const { createProductValidations } = require('./validations/createProduct');
 
@@ -29,6 +30,8 @@ app.patch('/categories/:id', CategoryCtrl.update);
 
 app.get('/designs', DesignCtrl.index);
 app.post('/designs', DesignCtrl.create);
+
+app.post('/buy', PurchaseCtrl.create);
 
 app.listen(process.env.PORT, () => {
   console.log(`SERVER RUNNING at http://localhost:${process.env.PORT}`);
