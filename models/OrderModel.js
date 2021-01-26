@@ -1,11 +1,32 @@
 const {model, Schema} = require('mongoose');
 
+const BuyerSchema = new Schema({
+  initials: {
+    required: true,
+    type: String,
+  },
+  phone: {
+    required: true,
+    type: String
+  },
+  mail: {
+    required: true,
+    type: String
+  },
+  city: {
+    required: true,
+    type: String
+  },
+  post: {
+    required: true,
+    type: Number
+  },
+});
+
+
 const OrderSchema = new Schema({
   order: [Object],
-  buyer: {
-    type: Map,
-    of: String
-  },
+  buyer: BuyerSchema,
   price: {
     required: true,
     type: Number
@@ -22,8 +43,8 @@ const OrderSchema = new Schema({
     ]
   },
   el_waybill: String,
-  date: Date,
-  update_date: Date
+  createdAt: Date,
+  updatedAt: Date
 });
 
 const OrderModel = model('Order', OrderSchema);
