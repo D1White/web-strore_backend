@@ -1,5 +1,8 @@
 const express = require("express");
+
 const { isValidObjectId } = require("../utils/isValidObjectId");
+const { validationResult } = require('express-validator');
+
 const { ProductModel } = require("../models/ProductModel");
 const { OrderModel } = require('../models/OrderModel');
 
@@ -22,25 +25,35 @@ class OrderController {
   
   async create(req, res) {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        res.status(400).json({
+          status: "error",
+          errors: errors.array(),
+        });
+        return;
+      }
+
       const purchase_arr = req.body.purchase_arr;
 
       try {
         for (const obj of purchase_arr) {
           const index = purchase_arr.indexOf(obj);
           
-          if (!isValidObjectId(obj.id)) {
-            throw {
-              name: "invalid object id",
-              message: `purcgace_arr[${index}] specified incorrect product id`,
-            };
-          }
+          // if (!isValidObjectId(obj.id)) {
+          //   throw {
+          //     name: "invalid object id",
+          //     message: `purcgace_arr[${index}] specified incorrect product id`,
+          //   };
+          // }
 
-          if (!isValidObjectId(obj.design_id)) {
-            throw {
-              name: "invalid object id",
-              message: `purcgace_arr[${index}] specified incorrect design id`,
-            };
-          }
+          // if (!isValidObjectId(obj.design_id)) {
+          //   throw {
+          //     name: "invalid object id",
+          //     message: `purcgace_arr[${index}] specified incorrect design id`,
+          //   };
+          // }
 
           await ProductModel.findOne({
             _id: obj.id,
@@ -88,8 +101,6 @@ class OrderController {
 
       //создание заказа
 
-      //!!! ошибка валидации
-
       const data = {
         order: purchase_arr,
         buyer: req.body.buyer,
@@ -114,7 +125,15 @@ class OrderController {
   }
 
   async update(req, res) {
-    //!!!проверка валидацией
+    const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        res.status(400).json({
+          status: "error",
+          errors: errors.array(),
+        });
+        return;
+      }
 
     //проверкка на корректный ObjectId
     const orderId = req.params.id;

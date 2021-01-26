@@ -12,6 +12,7 @@ const { DesignCtrl } = require('./controllers/DesignController');
 const { OrderCtrl } = require('./controllers/OrderController');
 
 const { createProductValidations } = require('./validations/createProduct');
+const { createOrderValidations } = require('./validations/createOrder');
 
 const app = express();
 
@@ -32,8 +33,8 @@ app.get('/designs', DesignCtrl.index);
 app.post('/designs', DesignCtrl.create);
 
 app.get('/orders', OrderCtrl.index);
-app.post('/orders', OrderCtrl.create);
-app.patch('/orders/:id', OrderCtrl.update);
+app.post('/orders', createOrderValidations, OrderCtrl.create);
+app.patch('/orders/:id', createOrderValidations, OrderCtrl.update);
 
 app.listen(process.env.PORT, () => {
   console.log(`SERVER RUNNING at http://localhost:${process.env.PORT}`);
