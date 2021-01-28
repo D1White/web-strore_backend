@@ -14,7 +14,7 @@ const CategorySchema = new Schema({
   products: [{
     type: Schema.Types.ObjectId,
     ref: 'Product'
-  }]
+  }],
 });
 
 const CategoryModel = model('Category', CategorySchema);
