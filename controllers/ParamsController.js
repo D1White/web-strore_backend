@@ -15,15 +15,15 @@ class ParamsController {
 
       let params = {};
 
-      const max = await ProductModel.findOne({}).sort('-price').select('price -_id').exec();
-      const min = await ProductModel.findOne({}).sort('price').select('price -_id').exec();
+      const max = await ProductModel.findOne({category: categoryId}).sort('-price').select('price -_id').exec();
+      const min = await ProductModel.findOne({category: categoryId}).sort('price').select('price -_id').exec();
 
       params.price = {
         min: min.price,
         max: max.price
       }
 
-      const params_arr = await ProductModel.find({}).select('info -_id').exec();
+      const params_arr = await ProductModel.find({category: categoryId}).select('info -_id').exec();
 
       params_arr.forEach(e => {
         const data = e.info;
