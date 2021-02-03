@@ -17,6 +17,7 @@ const { createOrderValidations } = require('./validations/createOrder');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/products', ProductCtrl.index);

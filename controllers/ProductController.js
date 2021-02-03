@@ -25,8 +25,8 @@ class ProductController {
           }
         }
 
-        console.log('filter' ,filterQuery);
-        console.log('sort' ,sortQuery);
+        // console.log('filter' ,filterQuery);
+        // console.log('sort' ,sortQuery);
         // const qe = new URLSearchParams({
         //   $lte: 1,
         //   $gte: 5
