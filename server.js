@@ -26,9 +26,9 @@ app.patch('/products/:id', createProductValidations, ProductCtrl.update);
 app.delete('/products/:id', ProductCtrl.delete);
 
 app.get('/categories', CategoryCtrl.index);
-app.get('/categories/:id', CategoryCtrl.show);
+app.get('/categories/:name', CategoryCtrl.show);
 app.post('/categories', CategoryCtrl.create);
-app.patch('/categories/:id', CategoryCtrl.update);
+app.patch('/categories/:name', CategoryCtrl.update);
 
 app.get('/orders', OrderCtrl.index);
 app.post('/orders', createOrderValidations, OrderCtrl.create);

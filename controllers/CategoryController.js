@@ -8,7 +8,7 @@ const { isValidObjectId } = require("../utils/isValidObjectId");
 class CategoryController {
   async index(_, res) {
     try {
-      const categories = await CategoryModel.find({}).exec();
+      const categories = await CategoryModel.find({}).select('-_id').exec();
 
       res.json({
         data: categories,
@@ -24,14 +24,9 @@ class CategoryController {
 
   async show(req, res) {
     try {
-      const categoryId = req.params.id;
+      const categoryName = req.params.name;
 
-      if (!isValidObjectId(categoryId)) {
-        res.status(404).send();
-        return;
-      }
-
-      const category = await CategoryModel.findById(categoryId).populate({
+      const category = await CategoryModel.findOne({name: categoryName}).select('-_id').populate({
         path: 'products',
         match: req.query,
       }).exec();
@@ -80,11 +75,13 @@ class CategoryController {
 
   async update(req, res) {
     try {
+      const categoryName = req.params.name;
 
       const category = await CategoryModel.updateOne(
-        { _id: req.params.id },
+        { name: categoryName },
         { $set: {
           name: req.body.name,
+          full_name: req.body.full_name,
         }}
       );
 
