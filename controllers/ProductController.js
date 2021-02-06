@@ -41,13 +41,11 @@ class ProductController {
         const products = await ProductModel.find(filterQuery, null, { sort: sortQuery }).exec();
         
         res.json({
-          status: "succes",
           data: products,
         });
       }else {
         const products = await ProductModel.find({}).exec();
         res.json({
-          status: "succes",
           data: products,
         });
       }
@@ -74,23 +72,12 @@ class ProductController {
         select: '-products -__v'
       }).exec();
 
-      // populate({
-      //   patch: 'category',
-      //   select: '-products'
-      // }).execPopulate()
-
       if (!product) {
         res.status(404).send();
         return;
       }
 
-      // await product.populate({
-      //   path: 'category',
-      //   select: '-products',
-      // }).execPopulate(),
-
       res.json({
-        status: "succes",
         data: product,
       })
     } catch (error) {
@@ -154,7 +141,6 @@ class ProductController {
       )
 
       res.status(201).json({
-        status: "succes",
         data: await product.populate({
           path: 'category',
           select: '-products',
@@ -219,7 +205,6 @@ class ProductController {
       );
 
       res.json({
-        status: "succes",
         data: product,
       });
 

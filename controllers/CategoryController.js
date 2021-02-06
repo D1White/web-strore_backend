@@ -11,7 +11,6 @@ class CategoryController {
       const categories = await CategoryModel.find({}).exec();
 
       res.json({
-        status: "succes",
         data: categories,
       });
 
@@ -38,7 +37,6 @@ class CategoryController {
       }).exec();
 
       res.json({
-        status: "succes",
         data: category,
       })
     } catch (error) {
@@ -69,7 +67,6 @@ class CategoryController {
       const category = await CategoryModel.create(data);
 
       res.status(201).json({
-        status: "succes",
         data: category,
       })
 
@@ -92,7 +89,6 @@ class CategoryController {
       );
 
       res.json({
-        status: "succes",
         data: category,
       });
 

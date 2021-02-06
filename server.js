@@ -8,7 +8,6 @@ const cors = require("cors");
 
 const { ProductCtrl } = require('./controllers/ProductController');
 const { CategoryCtrl } = require('./controllers/CategoryController');
-const { DesignCtrl } = require('./controllers/DesignController');
 const { OrderCtrl } = require('./controllers/OrderController');
 const { ParamsCtrl } = require('./controllers/ParamsController');
 
@@ -30,9 +29,6 @@ app.get('/categories', CategoryCtrl.index);
 app.get('/categories/:id', CategoryCtrl.show);
 app.post('/categories', CategoryCtrl.create);
 app.patch('/categories/:id', CategoryCtrl.update);
-
-app.get('/designs', DesignCtrl.index);
-app.post('/designs', DesignCtrl.create);
 
 app.get('/orders', OrderCtrl.index);
 app.post('/orders', createOrderValidations, OrderCtrl.create);

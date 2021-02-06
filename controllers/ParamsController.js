@@ -46,7 +46,6 @@ class ParamsController {
       });
 
       res.json({
-        status: "succes",
         data: params,
       })
     } catch (error) {

@@ -21,6 +21,6 @@ const DesignSchema = new Schema({
   }
 });
 
-const DesignModel = model('Design', DesignSchema);
-exports.DesignModel = DesignModel;
+// const DesignModel = model('Design', DesignSchema);
+// exports.DesignModel = DesignModel;
 exports.DesignSchema = DesignSchema;

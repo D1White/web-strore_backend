@@ -12,7 +12,6 @@ class OrderController {
       const orders = await OrderModel.find({}).exec()
 
       res.json({
-        status: "succes",
         data: orders,
       });
     } catch (error) {
@@ -113,7 +112,6 @@ class OrderController {
 
 
       res.status(201).json({
-        status: "succes",
         data: order,
       });
     } catch (error) {
