@@ -26,6 +26,10 @@ const ProductSchema = new Schema({
     of: String
   },
   description: String,
+  orderIndex: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const ProductModel = model('Product', ProductSchema);

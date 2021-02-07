@@ -10,6 +10,7 @@ const { ProductCtrl } = require('./controllers/ProductController');
 const { CategoryCtrl } = require('./controllers/CategoryController');
 const { OrderCtrl } = require('./controllers/OrderController');
 const { ParamsCtrl } = require('./controllers/ParamsController');
+const { PromoCtrl } = require('./controllers/PromoController');
 
 const { createProductValidations } = require('./validations/createProduct');
 const { createOrderValidations } = require('./validations/createOrder');
@@ -36,6 +37,8 @@ app.post('/orders', createOrderValidations, OrderCtrl.create);
 app.patch('/orders/:id', createOrderValidations, OrderCtrl.update);
 
 app.get('/params/:id', ParamsCtrl.show);
+
+app.get('/promo', PromoCtrl.index);
 
 app.listen(process.env.PORT, () => {
   console.log(`SERVER RUNNING at http://localhost:${process.env.PORT}`);

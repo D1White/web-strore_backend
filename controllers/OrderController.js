@@ -66,7 +66,8 @@ class OrderController {
           { '_id': obj.id, 'design._id': obj.design_id },
           {
             $inc: {
-              'design.$.quantity': -obj.quantity
+              'design.$.quantity': -obj.quantity,
+              'orderIndex': obj.quantity,
             }
           }
         ).exec()
