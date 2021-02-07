@@ -24,7 +24,6 @@ class ParamsController {
       }
 
       const params_arr = await ProductModel.find({category: categoryId}).select('info -_id').exec();
-
       params_arr.forEach(e => {
         const data = e.info;
         for (const i of data) {
@@ -44,6 +43,19 @@ class ParamsController {
           }
         }
       });
+
+      const designs_arr = await ProductModel.find({category: categoryId}).select('design -_id').exec();
+      let designs = [];
+      designs_arr.forEach( e => {
+        const data = e.design;
+        for (const i of data) {
+          if (designs.indexOf(i.name)) {
+            designs.push(i.name)
+          }
+        }
+      });
+      params.designs = designs;
+
 
       res.json({
         data: params,
