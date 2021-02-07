@@ -51,8 +51,7 @@ class ProductController {
       }
       
     } catch (error) {
-      res.json({
-        status: "error",
+      res.status(500).json({
         message: JSON.stringify(error),
       });
     }
@@ -81,7 +80,9 @@ class ProductController {
         data: product,
       })
     } catch (error) {
-      
+      res.status(500).json({
+        message: JSON.stringify(error),
+      });
     }
   }
 
@@ -187,7 +188,7 @@ class ProductController {
 
     } catch (error) {
       res.status(500).json({
-        message: error,
+        message: JSON.stringify(error),
       });
     }
   }
@@ -212,7 +213,7 @@ class ProductController {
       
     } catch (error) {
       res.status(500).json({
-        message: error,
+        message: JSON.stringify(error),
       });
     }
   }

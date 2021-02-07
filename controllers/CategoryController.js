@@ -100,7 +100,7 @@ class CategoryController {
 
     } catch (error) {
       res.status(500).json({
-        message: error,
+        message: JSON.stringify(error),
       });
     }
   }

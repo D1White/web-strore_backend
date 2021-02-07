@@ -103,7 +103,8 @@ class OrderController {
   }
 
   async update(req, res) {
-    const errors = validationResult(req);
+    try {
+      const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
         res.status(400).json({
@@ -112,28 +113,33 @@ class OrderController {
         return;
       }
 
-    //проверкка на корректный ObjectId
-    const orderId = req.params.id;
+      //проверкка на корректный ObjectId
+      const orderId = req.params.id;
 
-    if (!isValidObjectId(orderId)) {
-      res.status(404).json({
-        message: "Order id is wrong"
+      if (!isValidObjectId(orderId)) {
+        res.status(404).json({
+          message: "Order id is wrong"
+        });
+        return;
+      }
+
+      const order = await OrderModel.updateOne(
+        { _id: orderId},
+        { $set: {
+          buyer: req.body.buyer,
+          status: req.body.status,
+          updatedAt: new Date()
+        }}
+      );
+
+      res.json({
+        data: order,
       });
-      return;
+    } catch (error) {
+      res.status(500).json({
+        massage: JSON.stringify(error),
+      });
     }
-
-    const order = await OrderModel.updateOne(
-      { _id: orderId},
-      { $set: {
-        buyer: req.body.buyer,
-        status: req.body.status,
-        updatedAt: new Date()
-      }}
-    );
-
-    res.json({
-      data: order,
-    });
   }
 }
 
