@@ -98,7 +98,7 @@ class ProductController {
       }
 
       //проверка существует ли категория с таки id
-      const category = await CategoryModel.findById(categoryId).exec();
+      const category = await CategoryModel.findById(req.body.category).exec();
 
       if (!category) {
         res.status(404).json({
@@ -121,14 +121,15 @@ class ProductController {
       const product = await ProductModel.create(data);
 
       res.status(201).json({
-        data: await product.populate({
-          path: 'category',
-          select: '-products',
-        }).execPopulate(),
+        data: await product.populate('category').execPopulate(),
       })
+      //   data: await product.populate({
+      //     path: 'category',
+      //     select: '-products',
+      //   }).execPopulate(),
 
     } catch (error) {
-      res.json({
+      res.status(500).json({
         message: JSON.stringify(error),
       });
     }
