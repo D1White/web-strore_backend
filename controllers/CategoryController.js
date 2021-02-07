@@ -1,4 +1,5 @@
 const express = require("express");
+const { validationResult } = require('express-validator');
 
 const { CategoryModel } = require("../models/CategoryModel");
 const { isValidObjectId } = require("../utils/isValidObjectId");
@@ -42,14 +43,13 @@ class CategoryController {
 
   async create(req, res) {
     try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //   res.status(400).json({
-      //     status: "error",
-      //     errors: errors.array(),
-      //   });
-      //   return;
-      // }
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({
+          errors: errors.array(),
+        });
+        return;
+      }
 
       const data = {
         name: req.body.name,
@@ -71,6 +71,14 @@ class CategoryController {
 
   async update(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({
+          errors: errors.array(),
+        });
+        return;
+      }
+
       const categoryId = req.params.id;
 
       if (!isValidObjectId(categoryId)) {

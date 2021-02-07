@@ -13,6 +13,7 @@ const { ParamsCtrl } = require('./controllers/ParamsController');
 
 const { createProductValidations } = require('./validations/createProduct');
 const { createOrderValidations } = require('./validations/createOrder');
+const { createCategoryValidations } = require('./validations/createCategory');
 
 const app = express();
 
@@ -27,8 +28,8 @@ app.delete('/products/:id', ProductCtrl.delete);
 
 app.get('/categories', CategoryCtrl.index);
 app.get('/categories/:id', CategoryCtrl.show);
-app.post('/categories', CategoryCtrl.create);
-app.patch('/categories/:id', CategoryCtrl.update);
+app.post('/categories', createCategoryValidations, CategoryCtrl.create);
+app.patch('/categories/:id', createCategoryValidations, CategoryCtrl.update);
 
 app.get('/orders', OrderCtrl.index);
 app.post('/orders', createOrderValidations, OrderCtrl.create);
