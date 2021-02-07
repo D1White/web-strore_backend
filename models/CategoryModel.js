@@ -11,10 +11,6 @@ const CategorySchema = new Schema({
     unique: true,
     type: String,
   },
-  products: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
-  }],
 });
 
 const CategoryModel = model('Category', CategorySchema);

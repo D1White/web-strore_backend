@@ -12,7 +12,7 @@ class ProductController {
       const query = req.query;
       if (JSON.stringify(req.query) !== '{}') {
         console.log(req.query);
-        // const products = await ProductModel.find(req.query).exec();
+
         let filterQuery = {};
         let sortQuery = {};
         for (const key in query) {
@@ -92,19 +92,7 @@ class ProductController {
 
       if (!errors.isEmpty()) {
         res.status(400).json({
-          status: "error",
           errors: errors.array(),
-        });
-        return;
-      }
-
-      //проверкка на корректный ObjectId
-      const categoryId = req.body.category;
-
-      if (!isValidObjectId(categoryId)) {
-        res.status(404).json({
-          status: "error",
-          message: "Category id is wrong"
         });
         return;
       }
@@ -114,7 +102,6 @@ class ProductController {
 
       if (!category) {
         res.status(404).json({
-          status: "error",
           message: "Categories with this id does not exist"
         });
         return;
@@ -133,13 +120,6 @@ class ProductController {
 
       const product = await ProductModel.create(data);
 
-      await CategoryModel.updateOne(
-        { _id: categoryId },
-        { $push: {
-          products: product._id,
-        } }
-      )
-
       res.status(201).json({
         data: await product.populate({
           path: 'category',
@@ -149,7 +129,6 @@ class ProductController {
 
     } catch (error) {
       res.json({
-        status: "error",
         message: JSON.stringify(error),
       });
     }
@@ -162,36 +141,33 @@ class ProductController {
 
       if (!errors.isEmpty()) {
         res.status(400).json({
-          status: "error",
           errors: errors.array(),
         });
         return;
       }
 
       //проверкка на корректный ObjectId
-      const categoryId = req.body.category;
+      const productId = req.params.id;
 
-      if (!isValidObjectId(categoryId)) {
+      if (!isValidObjectId(productId)) {
         res.status(404).json({
-          status: "error",
-          message: "Category id is wrong"
+          message: "Product id is wrong"
         });
         return;
       }
 
       //проверка существует ли категория с таки id
-      const category = await CategoryModel.findById(categoryId).exec();
+      const category = await CategoryModel.findById(req.body.category).exec();
 
       if (!category) {
         res.status(404).json({
-          status: "error",
           message: "Categories with this id does not exist"
         });
         return;
       }
 
       const product = await ProductModel.updateOne(
-        { _id: req.params.id },
+        { _id: productId },
         { $set: {
           name: req.body.name,
           full_name: req.body.full_name,
@@ -210,7 +186,6 @@ class ProductController {
 
     } catch (error) {
       res.status(500).json({
-        status: "error",
         message: error,
       });
     }
@@ -226,31 +201,16 @@ class ProductController {
         return;
       }
 
-      const product = await ProductModel.findById(productId);
-
-      if (product) {
-
-        CategoryModel.updateOne(
-          { _id: product.category },
-          { $pull: { products: product._id }},
-          function(err, result) {
-            if (err) {
-              res.send(err);
-            } else {
-              product.remove();
-              res.status(204).send();
-            }
-          }
-        );
-
-      }else {
-        res.status(404).send();
-      }
-
+      await ProductModel.findByIdAndDelete(productId, function(err) {
+        if (err) {
+          res.status(404).send();
+        }else {
+          res.status(204).send();
+        }
+      })
       
     } catch (error) {
       res.status(500).json({
-        status: "error",
         message: error,
       });
     }

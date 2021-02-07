@@ -43,9 +43,6 @@ const createOrderValidations = [
       max: 1000
     })
     .withMessage("Допустимый номер отделения от 1 до 1000"),
-  // body("status", "Введите статус заказа")
-  //   .isString()
-  //   .withMessage("Неверный статус заказа"),
 ];
 
 exports.createOrderValidations = createOrderValidations;

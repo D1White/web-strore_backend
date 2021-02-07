@@ -1,14 +1,12 @@
 const express = require("express");
 
 const { CategoryModel } = require("../models/CategoryModel");
-const { ProductModel } = require("../models/ProductModel");
-
 const { isValidObjectId } = require("../utils/isValidObjectId");
 
 class CategoryController {
   async index(_, res) {
     try {
-      const categories = await CategoryModel.find({}).select('-_id').exec();
+      const categories = await CategoryModel.find({}).exec();
 
       res.json({
         data: categories,
@@ -16,7 +14,6 @@ class CategoryController {
 
     } catch (error) {
       res.status(500).json({
-        status: "error",
         massage: JSON.stringify(error),
       });
     }
@@ -24,19 +21,20 @@ class CategoryController {
 
   async show(req, res) {
     try {
-      const categoryName = req.params.name;
+      const categoryId = req.params.id;
 
-      const category = await CategoryModel.findOne({name: categoryName}).select('-_id').populate({
-        path: 'products',
-        match: req.query,
-      }).exec();
+      if (!isValidObjectId(categoryId)) {
+        res.status(404).send();
+        return;
+      }
+
+      const category = await CategoryModel.findById(categoryId).exec();
 
       res.json({
         data: category,
       })
     } catch (error) {
       res.status(500).json({
-        status: "error",
         massage: JSON.stringify(error),
       });
     }
@@ -45,7 +43,6 @@ class CategoryController {
   async create(req, res) {
     try {
       // const errors = validationResult(req);
-
       // if (!errors.isEmpty()) {
       //   res.status(400).json({
       //     status: "error",
@@ -67,7 +64,6 @@ class CategoryController {
 
     } catch (error) {
       res.status(500).json({
-        status: "error",
         massage: JSON.stringify(error),
       });
     }
@@ -75,10 +71,15 @@ class CategoryController {
 
   async update(req, res) {
     try {
-      const categoryName = req.params.name;
+      const categoryId = req.params.id;
+
+      if (!isValidObjectId(categoryId)) {
+        res.status(404).send();
+        return;
+      }
 
       const category = await CategoryModel.updateOne(
-        { name: categoryName },
+        { _id: categoryId },
         { $set: {
           name: req.body.name,
           full_name: req.body.full_name,
@@ -91,7 +92,6 @@ class CategoryController {
 
     } catch (error) {
       res.status(500).json({
-        status: "error",
         message: error,
       });
     }

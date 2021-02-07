@@ -50,7 +50,6 @@ class ParamsController {
       })
     } catch (error) {
       res.status(500).json({
-        status: "error",
         massage: JSON.stringify(error),
       });
     }
