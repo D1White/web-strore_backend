@@ -1,6 +1,5 @@
 const express = require("express");
 const { ProductModel } = require("../models/ProductModel");
-const { isValidObjectId } = require("../utils/isValidObjectId");
 
 class PromoController {
   async index(_, res) {

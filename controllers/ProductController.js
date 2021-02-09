@@ -25,6 +25,10 @@ class ProductController {
           }
         }
 
+        for (const [key, value] of Object.entries(filterQuery)) {
+          filterQuery[key] = value.split(',').map(value => value.trim());
+        }
+
         // console.log('filter' ,filterQuery);
         // console.log('sort' ,sortQuery);
         // const qe = new URLSearchParams({
