@@ -21,12 +21,8 @@ class ProductController {
           }else if (key[0] === '$') {
             filterQuery[key.slice(1)] = Object.fromEntries(new URLSearchParams(query[key]))
           }else {
-            filterQuery[key] = query[key];
+            filterQuery[key] = query[key].split(',').map(value => value.trim());
           }
-        }
-
-        for (const [key, value] of Object.entries(filterQuery)) {
-          filterQuery[key] = value.split(',').map(value => value.trim());
         }
 
         // console.log('filter' ,filterQuery);
