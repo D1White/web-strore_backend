@@ -21,12 +21,26 @@ class ProductController {
           }else if (key[0] === '$') {
             filterQuery[key.slice(1)] = Object.fromEntries(new URLSearchParams(query[key]))
           }else {
-            filterQuery[key] = query[key].split(',').map(value => value.trim());
+            let queryKey = key;
+
+            if (queryKey === 'category' ||
+                queryKey === 'name' ||
+                queryKey === 'full_name' ||
+                queryKey === 'price'
+            ) {
+              queryKey = queryKey;
+            }else if (queryKey === 'design') {
+              queryKey = 'design.name';
+            }else {
+              queryKey = `info.${queryKey}`;
+            }
+            
+            filterQuery[queryKey] = query[key].split(',').map(value => value.trim());
           }
         }
 
-        // console.log('filter' ,filterQuery);
-        // console.log('sort' ,sortQuery);
+        console.log('filter' ,filterQuery);
+        console.log('sort' ,sortQuery);
         // const qe = new URLSearchParams({
         //   $lte: 1,
         //   $gte: 5
