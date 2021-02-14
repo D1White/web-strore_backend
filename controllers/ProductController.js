@@ -90,9 +90,7 @@ class ProductController {
         return;
       }
 
-      res.json({
-        data: product,
-      })
+      res.json(product)
     } catch (error) {
       res.status(500).json({
         message: JSON.stringify(error),
@@ -196,9 +194,7 @@ class ProductController {
         }}
       );
 
-      res.json({
-        data: product,
-      });
+      res.json(product);
 
     } catch (error) {
       res.status(500).json({

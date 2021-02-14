@@ -31,9 +31,7 @@ class CategoryController {
 
       const category = await CategoryModel.findById(categoryId).exec();
 
-      res.json({
-        data: category,
-      })
+      res.json(category)
     } catch (error) {
       res.status(500).json({
         massage: JSON.stringify(error),
@@ -58,9 +56,7 @@ class CategoryController {
 
       const category = await CategoryModel.create(data);
 
-      res.status(201).json({
-        data: category,
-      })
+      res.status(201).json(category)
 
     } catch (error) {
       res.status(500).json({
@@ -94,9 +90,7 @@ class CategoryController {
         }}
       );
 
-      res.json({
-        data: category,
-      });
+      res.json(category);
 
     } catch (error) {
       res.status(500).json({

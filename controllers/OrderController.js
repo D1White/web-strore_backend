@@ -93,9 +93,7 @@ class OrderController {
       const order = await OrderModel.create(data);
 
 
-      res.status(201).json({
-        data: order,
-      });
+      res.status(201).json(order);
     } catch (error) {
       res.status(500).json({
         massage: JSON.stringify(error),
@@ -133,9 +131,7 @@ class OrderController {
         }}
       );
 
-      res.json({
-        data: order,
-      });
+      res.json(order);
     } catch (error) {
       res.status(500).json({
         massage: JSON.stringify(error),
