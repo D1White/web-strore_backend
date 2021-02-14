@@ -15,10 +15,6 @@ const DesignSchema = new Schema({
   photo_url: {
     type: String
   },
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
-  }
 });
 
 // const DesignModel = model('Design', DesignSchema);
