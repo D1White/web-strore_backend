@@ -13,6 +13,14 @@ class ParamsController {
         return;
       }
 
+      const categoryProduct = await ProductModel.find({ category: categoryId}).exec();
+
+      if (categoryProduct.length === 0) {
+        res.json({});
+        return;
+      }
+
+      console.log('fews');
       let params = {};
 
       const max = await ProductModel.findOne({category: categoryId}).sort('-price').select('price -_id').exec();
@@ -57,9 +65,7 @@ class ParamsController {
       params.designs = designs;
 
 
-      res.json({
-        data: params,
-      })
+      res.json(params)
     } catch (error) {
       res.status(500).json({
         massage: JSON.stringify(error),
